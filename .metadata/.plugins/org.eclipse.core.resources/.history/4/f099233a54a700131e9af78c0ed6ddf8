@@ -1,0 +1,126 @@
+import java.util.ArrayList;
+
+public class Problems {
+	//Find the sum of all the multiples of 3 or 5 below 1000.
+	public static int Problem1() {
+		int sumMultThree = 3 * 333 * 334 / 2;
+		int sumMultFive = 5 * 199 * 200 / 2;
+		int sumMultFifteen = 15 * 66 * 67 / 2;
+		return sumMultThree + sumMultFive - sumMultFifteen;
+	}
+	
+	//By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.
+	public static int Problem2() {
+		int sum = 2;
+		int first = 1;
+		int second = 2;
+		int third = first + second;
+		while(third < 4000000) {			
+			if(third % 2 == 0) {
+				sum += third;
+			}
+			first = second;
+			second = third;
+			third = first + second;
+		}
+		return sum;
+	}
+	
+	//What is the largest prime factor of the number 600851475143 ?
+	public static int Problem3() {
+		long a = 600851475143L;
+		int count = 2;
+		while(a > 1) {
+			count++;
+			if(a % count == 0) {
+				a /= count;
+			}
+		}
+		return count;
+	}
+	
+	private static boolean isSixDigitPalindrome(int num) {
+		String str = "" + num;
+		if(str.length() != 6) {
+			return false;
+		}
+		for(int i = 0; i <= 3; i++) {
+			if(str.charAt(i) != str.charAt(-1 * i + 5)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	//Find the largest palindrome made from the product of two 3-digit numbers.
+	public static int Problem4() {
+		int palindrome = -1;
+		for(int i = 999; i >= 100; i--) {
+			for(int j = 999; j >= 100; j--) {
+				if(i * j > palindrome && isSixDigitPalindrome(i * j)) {
+					palindrome = i * j;
+				}
+			}
+		}
+		return palindrome;
+	}
+	
+	//What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
+	public static int Problem5() {
+		int answer = 2520;
+		boolean stop = false;
+		while(!stop) {
+			answer++;
+			stop = true;
+			for(int i = 1; i <= 20; i++) {
+				if(answer % i != 0) {
+					stop = false;
+					break;
+				}
+			}
+		}
+		return answer;
+	}
+	
+	//Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
+	public static int Problem6() {
+		int squareOfSumOfFirst100 = (100 * 101 / 2) * (100 * 101 / 2);
+		int sumOfFirst100Squares = 1;
+		for(int i = 2; i <= 100; i++) {
+			sumOfFirst100Squares += (i * i);
+		}
+		return Math.abs(sumOfFirst100Squares - squareOfSumOfFirst100);
+	}
+	
+	private static boolean isPrime(int num) {
+		for(int i = 2; i < num/2; i++) {
+			if(num % i == 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	//What is the 10001st prime number?
+	public static int Problem7() {
+		int count = 1;
+		int num = 3;
+		while(count < 10001) {
+			if(num % 2 != 0 && isPrime(num)) {
+				count++;
+			}
+			num++;
+		}
+		return num-1;
+	}
+	
+	public static void main (String[] args) {
+		System.out.println("Problem 1: " + Problem1());
+		System.out.println("Problem 2: " + Problem2());
+		System.out.println("Problem 3: " + Problem3());
+		System.out.println("Problem 4: " + Problem4());
+		System.out.println("Problem 5: " + 232792560); //derived from method Problem5(), but it takes too long to execute
+		System.out.println("Problem 6: " + Problem6());		
+		System.out.println("Problem 7: " + Problem7());		
+	}
+}

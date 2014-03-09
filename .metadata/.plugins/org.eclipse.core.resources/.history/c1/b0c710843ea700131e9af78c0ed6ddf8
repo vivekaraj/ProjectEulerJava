@@ -1,0 +1,13 @@
+public class Problems {
+	//Find the sum of all the multiples of 3 or 5 below 1000.
+	public int Problem1() {
+		int sumMultThree = 3 * 333 * 334 / 2;
+		int sumMultFive = 5 * 200 * 201 / 2;
+		int sumMultFifteen = 15 * 66 * 67 / 2;
+		return sumMultThree + sumMultFive - sumMultFifteen;
+	}
+	
+	public void printAnswers() {
+		System.out.println("Problem 1: " + Problem1());
+	}
+}

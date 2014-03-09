@@ -1,0 +1,122 @@
+import java.util.ArrayList;
+
+public class Problems {
+	//Find the sum of all the multiples of 3 or 5 below 1000.
+	public static int Problem1() {
+		int sumMultThree = 3 * 333 * 334 / 2;
+		int sumMultFive = 5 * 199 * 200 / 2;
+		int sumMultFifteen = 15 * 66 * 67 / 2;
+		return sumMultThree + sumMultFive - sumMultFifteen;
+	}
+	
+	//By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.
+	public static int Problem2() {
+		int sum = 2;
+		int first = 1;
+		int second = 2;
+		int third = first + second;
+		while(third < 4000000) {			
+			if(third % 2 == 0) {
+				sum += third;
+			}
+			first = second;
+			second = third;
+			third = first + second;
+		}
+		return sum;
+	}
+	
+	//What is the largest prime factor of the number 600851475143 ?
+	public static int Problem3() {
+		long a = 600851475143L;
+		int count = 2;
+		while(a > 1) {
+			count++;
+			if(a % count == 0) {
+				a /= count;
+			}
+		}
+		return count;
+	}
+	
+	private static boolean isSixDigitPalindrome(int num) {
+		String str = "" + num;
+		if(str.length() != 6) {
+			return false;
+		}
+		for(int i = 0; i <= 3; i++) {
+			if(str.charAt(i) != str.charAt(-1 * i + 5)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	//Find the largest palindrome made from the product of two 3-digit numbers.
+	public static int Problem4() {
+		int palindrome = -1;
+		for(int i = 999; i >= 100; i--) {
+			for(int j = 999; j >= 100; j--) {
+				if(i * j > palindrome && isSixDigitPalindrome(i * j)) {
+					palindrome = i * j;
+				}
+			}
+		}
+		return palindrome;
+	}
+	
+	//What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
+	public static int Problem5() {
+		int answer = 1;
+		int[] vals = new int[21];
+		for(int i = 2; i <= 20; i++) {
+			vals[i] = i;
+		}
+		ArrayList<ArrayList<Integer>> factors = new ArrayList<ArrayList<Integer>>();
+		factors.add(null);
+		factors.add(null);
+		for(int i = 2; i <= 20; i++) {
+			int count = 2;
+			int temp = i;
+			ArrayList<Integer> fact = new ArrayList<Integer>();
+			while(temp > 1) {
+				if(temp % count == 0) {
+					temp /= count;
+					fact.add(count);
+				} else {
+					count++;
+				}
+			}
+		}
+		for(int i = 2; i <= 20; i++) {
+			ArrayList<Integer> factsI = factors.get(i);
+			for(int j = i + 1; j <= 20; j++) {
+				ArrayList<Integer> factsJ = factors.get(i);
+				for(int k = 0; k < factsI.size(); k++) {
+					int temp = factsI.get(k);
+					if(factsJ.contains(temp)) {
+						factsI.remove(temp);
+						factsJ.remove(temp);
+						factors.set(i, factsI);
+						factors.set(j, factsJ);
+					}
+				}
+			}
+		}
+ 		return answer;
+	}
+	
+	public static void main (String[] args) {
+		System.out.println("Problem 1: " + Problem1());
+		System.out.println("Problem 2: " + Problem2());
+		System.out.println("Problem 3: " + Problem3());
+		System.out.println("Problem 4: " + Problem4());
+		System.out.println("Problem 5: " + Problem5());
+		int a = Problem5();
+		for(int i = 1; i <= 20; i++) {
+			if(a % i != 0) {
+				System.out.println(i);
+			}
+		}
+	}
+}
